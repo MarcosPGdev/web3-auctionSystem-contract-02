@@ -1,96 +1,91 @@
-🧾 AuctionSystem – Solidity Smart Contract
-A simple Web3 auction system built in Solidity.
-It allows an owner to create time-limited auctions and users to place Ether bids. The highest bid wins when the auction ends.
+🛒 Web3-auction-system-02 - Auction Smart Contract in Solidity
+This project is a smart contract written in Solidity that enables the creation and management of a basic auction system using Ether. It was developed as a learning exercise and is part of a broader Web3 development journey.
 
-🚀 Features
-👑 Only the owner can create auctions
+🚀 Key Features
+👑 Only the contract owner can create new auctions.
 
-🛑 Auctions have a deadline and automatically close when expired
+⏳ Auctions have a deadline and close automatically when the time expires.
 
-📈 Bidders must send Ether higher than both the initial and current bid
+💸 Users can place bids with Ether. Only higher bids are accepted.
 
-💸 Automatically refunds the previous highest bidder
+🔁 Previous bidders are refunded automatically.
 
-🧠 Tracks bid count and current winner
+📈 Tracks number of bids and current highest bidder.
 
-✅ Auctions must have a unique name
+🔐 Funds can be withdrawn only after the auction is closed.
 
-🔐 Funds can only be withdrawn by the owner after the auction ends
+❌ Auction names must be unique.
 
-🛠️ Contract Structure
-📦 Structs
-solidity
-Copiar
-Editar
-struct Auction {
-  string name;
-  uint256 initialPrice;
-  uint256 currentPrice;
-  address payable bidder;
-  uint256 deadline;
-  uint256 bidCount;
-  AuctionStatus status;
-}
-🔁 Enum
-solidity
-Copiar
-Editar
-enum AuctionStatus { Open, Closed, Payed }
-🔐 Modifiers
-OnlyOwner: restricts access to contract owner
+🧠 Auction Structure
+Each auction includes:
 
-auctionNameAbiable: ensures unique auction names
+name: unique name of the auction
 
-checkAuctionStatus: auto-closes expired auctions
+initialPrice: minimum required to start bidding
 
-checkNewBid: checks if msg.value is higher than current and initial bid
+currentPrice: highest bid received
 
-notOwner: prevents owner from bidding
+bidder: address of the current highest bidder
 
-onlyAuctionExists: ensures valid auction index
+deadline: timestamp indicating auction end
 
-💡 Usage
-1. Deploy
-Deploy AuctionSystem in Remix using Solidity 0.8.24.
+bidCount: number of total bids
 
-2. Create an auction
-solidity
-Copiar
-Editar
-createNewAuction("MacBook", 1 ether, 3600)
-3. Bid with ETH
-solidity
-Copiar
-Editar
-sendNewBid(0) payable: 1.2 ether
-4. Close and withdraw funds
-solidity
-Copiar
-Editar
-closeAuction(0)
-withdraw(0)
-📤 Events
-CreateAuction: when a new auction is created
+status: Open / Closed / Payed
 
-UpdatedAuctionState: when an auction changes status
+⚙️ How to Deploy and Test (Remix)
+Open Remix IDE
 
-UpdatedBid: when a new bid is placed
+Paste the contents of AuctionSystem.sol
 
-AuctionWithdraw: when owner withdraws the final bid
+Compile the contract using Solidity 0.8.24
 
-📚 Extra Functions
-getAuctionDetails(uint): returns winner, current price, time left, status
+Deploy the contract from your account (will be the owner)
 
-getBidCount(uint): returns number of bids on auction
+Interact with the contract via the functions listed below
 
-getTotalAuctions(): returns total number of auctions
+🔘 Available Functions
+Function	Description
+createNewAuction(name, price, duration)	Creates a new auction (owner only)
+sendNewBid(index)	Sends a new bid with msg.value (higher than current)
+closeAuction(index)	Closes an auction manually (owner only)
+withdraw(index)	Transfers final bid to owner after auction ends
+getAuctionDetails(index)	Returns the current winner, bid, time remaining and status
+getTotalAuctions()	Returns number of created auctions
+getBidCount(index)	Returns number of bids on a specific auction
 
-🧠 Ideas for Future Improvements
-Add support for ERC721 NFTs or metadata
+🔐 Security and Validations
+OnlyOwner: only the contract owner can create or close auctions
 
-Add auction categories or tags
+checkAuctionStatus: automatically closes expired auctions before allowing new bids
 
-Allow users to cancel or pause auctions
+checkNewBid: ensures bid is higher than both the initial and current price
 
-Add frontend using Ethers.js or Web3.js
+notOwner: owner cannot bid on their own auctions
 
+auctionNameAbiable: prevents duplicate auction names
+
+onlyAuctionExists: avoids access to non-existent auctions
+
+📦 Events
+CreateAuction(name, initialPrice)
+
+UpdatedAuctionState(name, status, index)
+
+UpdatedBid(index, value, bidder)
+
+AuctionWithdraw(index, amount, owner)
+
+🧱 Technologies
+Solidity 0.8.24
+
+Remix IDE for testing and deployment
+
+Ether (via msg.value) for real bidding and transfers
+
+✍️ Author
+Developed by Marcos Pérez as part of his Web3 development training.
+This smart contract is one of the first entries in his Web3 Developer Portfolio.
+
+📜 License
+This project is licensed under the MIT License.
