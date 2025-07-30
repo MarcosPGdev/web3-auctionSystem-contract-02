@@ -1,7 +1,3 @@
-Perfecto, aquí tienes tu versión de ese mismo estilo para tu contrato de subastas:
-
----
-
 # 🛒 Web3-auction-system-01 – Auction Smart Contract in Solidity
 
 This project is a smart contract written in Solidity that enables the creation and management of a basic auction system using Ether. It was developed as a learning exercise and is part of a broader Web3 development journey.
